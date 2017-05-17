@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_weight="3"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    android:background="@drawable/customborder">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            android:layout_weight="3"
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/paddlerLongName"
+                android:textSize="15dp"
+                android:layout_weight="0.5"
+                android:layout_gravity="left"
+                android:inputType="textNoSuggestions"
+                android:enabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:singleLine="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/paddlerShortName"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:enabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:singleLine="true" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/paddlerSide"
+                android:textSize="15dp"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:enabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:singleLine="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/paddlerWeight"
+                android:textSize="15dp"
+                android:layout_weight="1.2"
+                android:layout_gravity="left"
+                android:enabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:singleLine="true"
+                android:numeric="decimal"
+                android:editable="true" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            android:layout_weight="3"
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 1"
+                android:id="@+id/team1"
+                android:textSize="8dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 2"
+                android:id="@+id/team2"
+                android:textSize="8dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 3"
+                android:id="@+id/team3"
+                android:textSize="8dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 4"
+                android:id="@+id/team4"
+                android:textSize="8dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 5"
+                android:id="@+id/team5"
+                android:textSize="8dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 6"
+                android:id="@+id/team6"
+                android:textSize="8dp" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:id="@+id/isFemale"
+                android:textSize="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

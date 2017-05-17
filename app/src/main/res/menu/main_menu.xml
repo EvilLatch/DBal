@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <!--    <item
+            android:id="@+id/action_stroke_rate"
+            android:icon="@drawable/ic_pan_tool_black_36dp"
+            android:title="PaddlerDetail"
+            android:actionViewClass="android.widget.Spinner"
+            app:showAsAction="always"/>
+            -->
+    <item
+        android:id="@+id/team_spinner"
+        android:icon="@drawable/ic_supervisor_account_black_36dp"
+        android:title="PaddlerDetail"
+        android:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/lineup_spinner"
+        android:icon="@drawable/ic_content_copy_black_36dp"
+        android:title="PaddlerDetail"
+        android:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_paddler_details"
+        android:icon="@drawable/ic_face_black_36dp"
+        android:title="PaddlerDetail"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_save_data"
+        android:icon="@drawable/ic_save_36pt_3x"
+        android:title="SaveData"
+        app:showAsAction="always"/>
+        <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+</menu>
