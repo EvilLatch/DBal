@@ -1,6 +1,7 @@
 package us.blandfamily.dbal;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -74,8 +76,10 @@ public class PaddlerTeamViewAdapter extends BaseAdapter {
             holder.Side = (TextView) view.findViewById(R.id.paddlerSide);
             holder.AddRemove = (Button) view.findViewById(R.id.addRemovePaddler);
             holder.paddlerId = i;
+            holder.itemView = view;
             // hang onto this holder for future recyclage
             view.setTag(holder);
+
         } else {
 
             // skip all the expensive inflation/findViewById
@@ -94,16 +98,45 @@ public class PaddlerTeamViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int teamIndex = MainActivity.currTeam;
-                paddler.teams[teamIndex] = !paddler.teams[teamIndex];
-                if(paddler.teams[teamIndex])
+                int teamSize = MainActivity.data.getTeamSize(teamIndex);
+                int newTeamSize = teamSize + (!paddler.teams[teamIndex] ? 1 : 0);
+                if(newTeamSize <= 26)
                 {
-                    viewHolder.AddRemove.setText("REMOVE");
+                    paddler.teams[teamIndex] = !paddler.teams[teamIndex];
+                    if(paddler.teams[teamIndex])
+                    {
+                        viewHolder.AddRemove.setText("REMOVE");
+                        if(paddler.female)
+                        {
+                            viewHolder.itemView.setBackgroundColor(MainActivity.thisActivity.getResources().getColor(R.color.colorFemale));
+                        }
+                        else
+                        {
+                            viewHolder.itemView.setBackgroundColor(MainActivity.thisActivity.getResources().getColor(R.color.colorMale));
+                        }
+
+                    }
+                    else
+                    {
+                        viewHolder.AddRemove.setText("ADD");
+                        if(paddler.female)
+                        {
+                            viewHolder.itemView.setBackgroundColor(Color.rgb(170, 150, 150));
+                        }
+                        else
+                        {
+                            viewHolder.itemView.setBackgroundColor(Color.rgb(150, 150, 170));
+                        }
+
+                    }
+                    mTeamView.refreshActiveTeamOnly();
                 }
                 else
                 {
-                    viewHolder.AddRemove.setText("ADD");
+                    Toast.makeText(MainActivity.thisActivity, "Too Many Paddlers on Team", Toast.LENGTH_SHORT).show();
                 }
-                mTeamView.refresh();
+
+                //mTeamView.refresh();
             }
         };
         viewHolder.AddRemove.setOnClickListener(viewHolder.buttonListener);
@@ -111,10 +144,26 @@ public class PaddlerTeamViewAdapter extends BaseAdapter {
         if(paddler.teams[teamIndex])
         {
             viewHolder.AddRemove.setText("REMOVE");
+            if(paddler.female)
+            {
+                viewHolder.itemView.setBackgroundColor(MainActivity.thisActivity.getResources().getColor(R.color.colorFemale));
+            }
+            else
+            {
+                viewHolder.itemView.setBackgroundColor(MainActivity.thisActivity.getResources().getColor(R.color.colorMale));
+            }
         }
         else
         {
             viewHolder.AddRemove.setText("ADD");
+            if(paddler.female)
+            {
+                viewHolder.itemView.setBackgroundColor(Color.rgb(170, 150, 150));
+            }
+            else
+            {
+                viewHolder.itemView.setBackgroundColor(Color.rgb(150, 150, 170));
+            }
         }
     }
 
@@ -126,5 +175,6 @@ public class PaddlerTeamViewAdapter extends BaseAdapter {
         public Button AddRemove;
         public View.OnClickListener buttonListener;
         public int paddlerId;
+        public View itemView;
     }
 }

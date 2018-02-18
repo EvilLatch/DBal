@@ -2,25 +2,34 @@ package us.blandfamily.dbal;
 
 import android.Manifest;
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
+
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,62 +112,23 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     public void createPaddlerData()
     {
-        if(data.loadPaddlers() ==false)
+        for(int i = 1; i < 100; i++)
         {
-            PaddlerData p1 = new PaddlerData(1, "Anita Steele", "Anita", "R/L9", 290d);
-            PaddlerData p2 = new PaddlerData(2, "Barbara Hayes", "Barb", "B?", 150d);
-            PaddlerData p3 = new PaddlerData(3, "Bruce Barnett", "Bruce", "R/B", 170d);
-            PaddlerData p4 = new PaddlerData(4, "Chuck Landback", "Chuck", "", 170d);
-            PaddlerData p5 = new PaddlerData(5, "Doug Iliev", "Doug", "R/L9", 215d);
-            PaddlerData p6 = new PaddlerData(6, "Ilya Pistriykov", "Ilya", "L", 182d);
-            PaddlerData p7 = new PaddlerData(7, "Jill Landback", "Jill", "R", 131d);
-            PaddlerData p8 = new PaddlerData(8, "John Siple", "John", "L/B", 153.6d);
-            PaddlerData p9 = new PaddlerData(9, "John Thompson", "JT", "R", 245d);
-            PaddlerData p10 = new PaddlerData(10, "Kathleen  Sallee", "Kathleen", "R", 112d);
-            PaddlerData p11 = new PaddlerData(11, "Lachlan Bland", "Lachlan!", "R", 190d);
-            PaddlerData p12 = new PaddlerData(12, "Lisa Harkins", "Lisa H", "R/B", 269.6d);
-            PaddlerData p13 = new PaddlerData(13, "Luise Asif", "Louise", "R/L9", 135d);
-            PaddlerData p14 = new PaddlerData(14, "Mark Flieg", "Mark", "L/B", 235d);
-            PaddlerData p15 = new PaddlerData(15, "MJ", "MJ", "L", 105d);
-            PaddlerData p16 = new PaddlerData(16, "Roula Bland", "Stav", "B", 190d);
-            PaddlerData p17 = new PaddlerData(17, "Sabine Loebner", "Sabine", "B", 155d);
-            PaddlerData p18 = new PaddlerData(18, "Scot Harkins", "Scot", "B", 279d);
-            PaddlerData p19 = new PaddlerData(19, "Sophia Su", "Sophia", "L/R8", 145d);
-            PaddlerData p20 = new PaddlerData(20, "Susan Barnes", "Susan B", "R", 146d);
-            PaddlerData p21 = new PaddlerData(21, "Suzie Desimone", "Suzie D", "R", 110d);
-            PaddlerData p22 = new PaddlerData(22, "Tamio Miyata", "Tamio", "B", 225d);
-            PaddlerData p23 = new PaddlerData(23, "Wendy Colgan", "Wendy Co", "R/B", 180d);
-            PaddlerData p24 = new PaddlerData(24, "Empty", "Empty", "-", 0.0);
-            PaddlerData p25 = new PaddlerData(25, "Empty", "Empty", "-", 0.0);
-            PaddlerData p26 = new PaddlerData(26, "Empty", "Empty", "-", 0.0);
+            PaddlerData p1 = new PaddlerData(i, String.format("Paddler %d", i) , String.format("P_%d", i), "R/L", Math.floor(110 + (int)(Math.random() * 100)));
+            if(((int)(Math.random() * 100)) > 50)
+            {
+                p1.female = true;
+            }
             data.addPaddler(p1);
-            data.addPaddler(p2);
-            data.addPaddler(p3);
-            data.addPaddler(p4);
-            data.addPaddler(p5);
-            data.addPaddler(p6);
-            data.addPaddler(p7);
-            data.addPaddler(p8);
-            data.addPaddler(p9);
-            data.addPaddler(p10);
-            data.addPaddler(p11);
-            data.addPaddler(p12);
-            data.addPaddler(p13);
-            data.addPaddler(p14);
-            data.addPaddler(p15);
-            data.addPaddler(p16);
-            data.addPaddler(p17);
-            data.addPaddler(p18);
-            data.addPaddler(p19);
-            data.addPaddler(p20);
-            data.addPaddler(p21);
-            data.addPaddler(p22);
-            data.addPaddler(p23);
-            data.addPaddler(p24);
-            data.addPaddler(p25);
-            data.addPaddler(p26);
-            data.savePaddlers();
         }
+        //data.savePaddlers();
+        for(int i = 0; i < 6; i++)
+        {
+            teamLineUps[i] = new TeamLineUps(i);
+            teamLineUps[i].teamName = String.format("Team_%d", i+1);
+            //teamLineUps[i].loadLineUpsFromCSV(csvRead);
+        }
+        saveAllData();
     }
 
     public void createMappings()
@@ -452,7 +422,32 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     //TeamSelectorDialog.launchLineUpSelectorDialog(thisActivity);
                     return true;
                 }
+                if(item.getItemId() == R.id.action_loadSpecific) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.thisActivity);
+                    builder.setTitle("Save Before Load?");
+                    builder.setMessage("Do you want to save before overwriting with a load?")
+                            // Add the buttons
+                            .setPositiveButton("Yes, Save before loading", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked OK button
+                                    SaveFileDialog(true);
+                                }
+                            })
+                            .setNegativeButton("Discard and Load Anyway", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    LoadFileDialog();
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
+                    return true;
+                }
+                if(item.getItemId() == R.id.action_saveSpecific) {
+                    SaveFileDialog(false);
+                    return true;
+                }
                 return false;
             }
         });
@@ -467,8 +462,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
         if(savedInstanceState == null)
         {
-            createPaddlerData();
-            createLoadLineUps();
+            File importDir = new File(Environment.getExternalStorageDirectory(), "");
+            File file = new File(importDir, "MasterPaddlers.csv");
+            if(data.uberLoadPaddlers(file) == false)
+            {
+                createPaddlerData();
+                //createLoadLineUps();
+            }
             createMappings();
             setTeamLineUpActive();
             updateDisplay();
@@ -483,10 +483,127 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
+    private void LoadFileDialog() {
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("mySettings", MODE_PRIVATE);
+        String defaultDir = settings.getString("defaultDir", "/sdcard");
+        properties.root = new File("/sdcard");
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(defaultDir);
+        properties.extensions = null;
+        FilePickerDialog dialog = new FilePickerDialog(MainActivity.this, properties);
+        dialog.setTitle("Load File...");
+
+        dialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                //files is the array of the paths of files selected by the Application User.
+                if(files.length == 1)
+                {
+                    File loadFile = new File(files[0]);
+                    MainActivity.data.paddlers.clear();
+                    MainActivity.data.uberLoadPaddlers(loadFile);
+                    MainActivity.thisActivity.setTeamLineUpActive();
+
+                    SharedPreferences settings = getApplicationContext().getSharedPreferences("mySettings", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
+                    String defaultDir = loadFile.getParent();
+                    //Log.d("FILE SAVING", defaultDir);
+                    editor.putString("defaultDir", defaultDir);
+                    editor.apply();
+
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    private void SaveFileDialog(final boolean followWithLoad) {
+        DialogProperties properties = new DialogProperties();
+        properties.selection_mode = DialogConfigs.SINGLE_MODE;
+        properties.selection_type = DialogConfigs.FILE_AND_DIR_SELECT;
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("mySettings", MODE_PRIVATE);
+        String defaultDir = settings.getString("defaultDir", "/sdcard");
+        //String defaultDir = "/sdcard";
+        properties.root = new File("/sdcard");
+        properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+        properties.offset = new File(defaultDir);
+        properties.extensions = null;
+        FilePickerDialog dialog = new FilePickerDialog(MainActivity.this, properties);
+        dialog.setTitle("Save File...");
+
+        dialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                //files is the array of the paths of files selected by the Application User.
+
+                if(files.length == 1)
+                {
+                    final String dirName = files[0];
+                    File dirFile = new File(dirName);
+                    String newFileName = "newClubStore.csv";
+                    if(dirFile.isFile())
+                    {
+                        newFileName = dirFile.getName();
+                        dirFile = dirFile.getParentFile();
+                    }
+                    final String finalDir = dirFile.getPath();
+                    if(dirFile.isDirectory())
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Change LineUp Name");
+
+                        // Set up the input
+                        final EditText input = new EditText(MainActivity.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        input.setText(newFileName);
+                        builder.setView(input);
+
+// Set up the buttons
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String filename = input.getText().toString();
+                                Log.d("FILE SAVING", finalDir + "/" + filename);
+                                File saveFile = new File(finalDir + "/" + filename);
+                                MainActivity.data.uberSavePaddlers(saveFile);
+                                if(followWithLoad == true)
+                                {
+                                    LoadFileDialog();
+                                }
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder.show();
+                    }
+                    else if(dirFile.isFile())
+                    {
+                        // Add a caution here for overwriting?
+                        MainActivity.data.uberSavePaddlers(dirFile);
+                    }
+
+                }
+            }
+        });
+        dialog.show();
+    }
+
     public static void saveAllData()
     {
-        data.savePaddlers();
-        saveAllLineUps();
+        File importDir = new File(Environment.getExternalStorageDirectory(), "");
+        File file = new File(importDir, "MasterPaddlers.csv");
+        data.uberSavePaddlers(file);
+        //data.savePaddlers();
+        //saveAllLineUps();
     }
 
     @Override

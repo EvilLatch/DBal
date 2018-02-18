@@ -41,7 +41,7 @@ public class club_paddlers extends AppCompatActivity {
                 }
                 if(item.getItemId() == R.id.action_save_data)
                 {
-                    MainActivity.data.savePaddlers();
+                    MainActivity.saveAllData();
                     Toast.makeText(getBaseContext(), "Paddler Data Saved", Toast.LENGTH_SHORT).show();
                     return true;
                 }

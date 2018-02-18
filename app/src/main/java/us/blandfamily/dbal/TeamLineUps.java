@@ -40,22 +40,27 @@ public class TeamLineUps {
         File file = new File(exportDir, filename);
         try {
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            for(int i = 0; i < numLineUps; i++) {
-                String arrStr[] = new String[crewSize+1];
-                for(int crewIndex = 0; crewIndex < crewSize; crewIndex++)
-                {
-                    arrStr[crewIndex] = String.valueOf(getPaddlerInLineUp(crewIndex, i));
-                }
-                arrStr[crewSize] = lineUpsNames[i];
-                csvWrite.writeNext(arrStr);
-            }
-            String arrStr[] = new String[1];
-            arrStr[0] = teamName;
-            csvWrite.writeNext(arrStr);
+
+            saveLineUpsToCSV(csvWrite);
             csvWrite.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveLineUpsToCSV(CSVWriter csvWrite) {
+        for(int i = 0; i < numLineUps; i++) {
+            String arrStr[] = new String[crewSize+1];
+            for(int crewIndex = 0; crewIndex < crewSize; crewIndex++)
+            {
+                arrStr[crewIndex] = String.valueOf(getPaddlerInLineUp(crewIndex, i));
+            }
+            arrStr[crewSize] = lineUpsNames[i];
+            csvWrite.writeNext(arrStr);
+        }
+        String arrStr[] = new String[1];
+        arrStr[0] = teamName;
+        csvWrite.writeNext(arrStr);
     }
 
     public boolean loadLineUps()
@@ -64,41 +69,46 @@ public class TeamLineUps {
         File importDir = new File(Environment.getExternalStorageDirectory(), "");
         File file = new File(importDir, filename);
         Log.d("Loading LineUps", importDir + ": ");
-        int numRead = 0;
+
         try {
             CSVReader csvRead = new CSVReader(new FileReader(file));
 
-            String arrStr[];
-            while((arrStr = csvRead.readNext())!= null && numRead < numLineUps)
-            {
-                for(int i = 0; i < crewSize && i < arrStr.length; i++)
-                {
-                    setPaddlerInLineUp(Integer.parseInt(arrStr[i]), i, numRead);
-                }
-                if(arrStr.length > crewSize)
-                {
-                    lineUpsNames[numRead] = arrStr[crewSize];
-                }
-                else
-                {
-                    lineUpsNames[numRead] = String.format("LineUp. %d", numRead +1);
-                }
-                numRead++;
-            }
-            if(arrStr != null)
-            {
-                teamName = arrStr[0];
-            }
-            else
-            {
-                teamName = "Team " + String.valueOf(teamIndex+1);
-            }
+            loadLineUpsFromCSV(csvRead);
             csvRead.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("Reading LineUps", Integer.toString(numRead));
-        return numRead> 0;
+        //Log.d("Reading LineUps", Integer.toString(numRead));
+        return true;
+    }
+
+    public void loadLineUpsFromCSV(CSVReader csvRead) throws IOException {
+        int numRead = 0;
+        String arrStr[];
+        while((arrStr = csvRead.readNext())!= null && numRead < numLineUps)
+        {
+            for(int i = 0; i < crewSize && i < arrStr.length; i++)
+            {
+                setPaddlerInLineUp(Integer.parseInt(arrStr[i]), i, numRead);
+            }
+            if(arrStr.length > crewSize)
+            {
+                lineUpsNames[numRead] = arrStr[crewSize];
+            }
+            else
+            {
+                lineUpsNames[numRead] = String.format("LineUp. %d", numRead +1);
+            }
+            numRead++;
+        }
+        if(arrStr != null)
+        {
+            teamName = arrStr[0];
+        }
+        else
+        {
+            teamName = "Team " + String.valueOf(teamIndex+1);
+        }
     }
 
     public void clearLineUp(int lineUpIndex)
@@ -137,6 +147,7 @@ public class TeamLineUps {
     {
         lineUpsNames[lineUp] = name;
     }
+
 
     public void verifyAndSanitizeLineUp(ClubDataStore data)
     {

@@ -80,6 +80,7 @@ public class PaddlerTeamViewSimpleAdapter extends BaseAdapter {
             holder.ShortName = (TextView) view.findViewById(R.id.paddlerShortName);
             holder.Side = (TextView) view.findViewById(R.id.paddlerSide);
             holder.paddlerId = i;
+            holder.itemView = view;
             // hang onto this holder for future recyclage
             view.setTag(holder);
         } else {
@@ -92,6 +93,15 @@ public class PaddlerTeamViewSimpleAdapter extends BaseAdapter {
         createTextWatchers(paddler, holder);
         holder.ShortName.setText(paddler.shortName);
         holder.Side.setText(paddler.side);
+        if(paddler.female)
+        {
+            holder.itemView.setBackgroundColor(MainActivity.thisActivity.getResources().getColor(R.color.colorFemale));
+        }
+        else
+        {
+            holder.itemView.setBackgroundColor(MainActivity.thisActivity.getResources().getColor(R.color.colorMale));
+        }
+
         return view;
     }
     private static void createTextWatchers(final PaddlerData paddler, final ViewHolder viewHolder)
@@ -104,5 +114,6 @@ public class PaddlerTeamViewSimpleAdapter extends BaseAdapter {
         public TextView ShortName;
         public TextView Side;
         public int paddlerId;
+        public View itemView;
     }
 }

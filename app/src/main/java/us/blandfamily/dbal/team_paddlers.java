@@ -19,6 +19,7 @@ public class team_paddlers extends AppCompatActivity {
     ArrayList mPaddlerList = new ArrayList();
     PaddlerTeamViewSimpleAdapter mArraySimpleAdapter;
     ArrayList mPaddlerSimpleList = new ArrayList();
+    TextView mTeamSizeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +29,13 @@ public class team_paddlers extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final team_paddlers thisActivity = this;
         TextView teamName = (TextView) findViewById(R.id.TeamDisplay);
+        mTeamSizeView = (TextView) findViewById(R.id.teamSize);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.action_save_data)
                 {
-                    MainActivity.data.savePaddlers();
+                    MainActivity.saveAllData();
                     Toast.makeText(getBaseContext(), "Paddler Data Saved", Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -55,7 +57,9 @@ public class team_paddlers extends AppCompatActivity {
 
     public void refresh() {
         TextView teamName = (TextView) findViewById(R.id.TeamDisplay);
+        mTeamSizeView = (TextView) findViewById(R.id.teamSize);
         teamName.setText(MainActivity.teamLineUps[MainActivity.currTeam].teamName);
+        mTeamSizeView.setText(String.format("Team Size: %d", MainActivity.data.getTeamSize(MainActivity.currTeam)));
         MainActivity parent = (MainActivity) this.getParent();
         mainListView = (ListView) findViewById(R.id.paddler_listview);
         teamListView = (ListView) findViewById(R.id.team_listview);
@@ -65,6 +69,28 @@ public class team_paddlers extends AppCompatActivity {
         mArrayAdapter.updateData(parent.data);
         // Set the ListView to use the ArrayAdapter
         mainListView.setAdapter(mArrayAdapter);
+        // Create an ArrayAdapter for the ListView
+        mArraySimpleAdapter = new PaddlerTeamViewSimpleAdapter(this,getLayoutInflater());
+        mArraySimpleAdapter.updateData(parent.data);
+        // Set the ListView to use the ArrayAdapter
+        teamListView.setAdapter(mArraySimpleAdapter);
+
+    }
+
+    public void refreshActiveTeamOnly() {
+        TextView teamName = (TextView) findViewById(R.id.TeamDisplay);
+        teamName.setText(MainActivity.teamLineUps[MainActivity.currTeam].teamName);
+        mTeamSizeView = (TextView) findViewById(R.id.teamSize);
+        mTeamSizeView.setText(String.format("Team Size: %d", MainActivity.data.getTeamSize(MainActivity.currTeam)));
+        MainActivity parent = (MainActivity) this.getParent();
+        //mainListView = (ListView) findViewById(R.id.paddler_listview);
+        teamListView = (ListView) findViewById(R.id.team_listview);
+
+        // Create an ArrayAdapter for the ListView
+        //mArrayAdapter = new PaddlerTeamViewAdapter(this,getLayoutInflater(), this);
+        //mArrayAdapter.updateData(parent.data);
+        // Set the ListView to use the ArrayAdapter
+        //mainListView.setAdapter(mArrayAdapter);
         // Create an ArrayAdapter for the ListView
         mArraySimpleAdapter = new PaddlerTeamViewSimpleAdapter(this,getLayoutInflater());
         mArraySimpleAdapter.updateData(parent.data);

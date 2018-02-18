@@ -12,28 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         android:layout_weight="3"
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:ems="10"
-            android:id="@+id/paddlerShortName"
-            android:textSize="14dp"
-            android:layout_weight="0.5"
-            android:layout_gravity="left"
-            android:enabled="true"
-            android:paddingLeft="1dp" />
 
         <TextView
+            android:id="@+id/paddlerShortName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="2"
+            android:ems="10"
+            android:enabled="true"
+            android:paddingLeft="1dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/paddlerSide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:ems="10"
+            android:enabled="true"
             android:inputType="textNoSuggestions"
             android:text=""
-            android:ems="10"
-            android:id="@+id/paddlerSide"
-            android:textSize="14dp"
-            android:layout_weight="1"
-            android:layout_gravity="left"
-            android:enabled="true" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

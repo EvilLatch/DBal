@@ -160,7 +160,7 @@ public class TeamSelectorDialog {
                         else
                         {
                             Toast.makeText(launchingActrivity, "Copying from " + MainActivity.teamLineUps[MainActivity.currTeam].lineUpsNames[MainActivity.currLineUp] + " to " + MainActivity.teamLineUps[MainActivity.currTeam].lineUpsNames[selection], Toast.LENGTH_SHORT).show();
-                            MainActivity.teamLineUps[MainActivity.currTeam].copyLineUp(MainActivity.currTeam, selection);
+                            MainActivity.teamLineUps[MainActivity.currTeam].copyLineUp(MainActivity.currLineUp, selection);
                         }
                         //MainActivity.currLineUp = MainActivity.nextLineUp;
                         //launchingActrivity.setTeamLineUpActive();
